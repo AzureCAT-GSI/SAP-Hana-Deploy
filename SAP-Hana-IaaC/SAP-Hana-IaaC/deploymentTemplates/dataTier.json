@@ -12,7 +12,13 @@
   "variables": {
     "vmNicName": "[concat(parameters('dataTierSettings').vmSettings.vmName, 'Nic')]",
     "vnetId": "[resourceId(parameters('dataTierSettings').vmSettings.virtualNetworkResourceGroupName, 'Microsoft.Network/virtualNetworks', parameters('dataTierSettings').vmSettings.virtualNetworkName)]",
-    "vmSubnetRef": "[concat(variables('vnetId'),'/subnets/',parameters('dataTierSettings').vmSettings.subnetName)]",
+    "vmSubnetRef": [
+      "[concat(variables('vnetId'),'/subnets/',parameters('dataTierSettings').vmSettings.subnetName,'-1')]",
+      "[concat(variables('vnetId'),'/subnets/',parameters('dataTierSettings').vmSettings.subnetName,'-2')]",
+      "[concat(variables('vnetId'),'/subnets/',parameters('dataTierSettings').vmSettings.subnetName,'-3')]",
+      "[concat(variables('vnetId'),'/subnets/',parameters('dataTierSettings').vmSettings.subnetName,'-4')]"
+      ],
+    
     "stgAccountName": "[concat(parameters('dataTierSettings').stgAccountNamePrefix, uniqueString(resourceGroup().id))]",
     "templateLinkStrings": "[split(deployment().properties.templateLink.uri, '?')]",
     "artifactsLocation": "[uri(deployment().properties.templateLink.uri, '..')]",
@@ -39,12 +45,12 @@
       "properties": {
         "ipConfigurations": [
           {
-            "name": "ipconfig1",
+            "name": "ipconfig",
             "properties": {
               "privateIPAllocationMethod": "Static",
               "privateIPAddress": "[parameters('dataTierSettings').vmSettings.privateIpAddresses[copyIndex()]]",
               "subnet": {
-                "id": "[variables('vmSubnetRef')]"
+                "id": "[variables('vmSubnetRef')[copyIndex()]]"
               }
             }
           }
@@ -145,13 +151,13 @@
               }
               },
               {
-                "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('vmNicName'), '-2'))]",
+                "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('vmNicName'), '-3'))]",
                 "properties": {
                   "primary": false
                 }
               },
               {
-                "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('vmNicName'), '-2'))]",
+                "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('vmNicName'), '-4'))]",
                 "properties": {
                   "primary": false
                 }

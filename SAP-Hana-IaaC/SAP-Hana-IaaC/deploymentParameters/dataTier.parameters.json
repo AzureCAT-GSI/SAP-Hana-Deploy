@@ -7,16 +7,18 @@
         "name": "dataTier",
         "vmSettings": {
           "vmName": "sapHanaDB",
-          "virtualNetworkResourceGroupName": "saptest2",
-          "virtualNetworkName": "saptest2-vnet",
+          "virtualNetworkResourceGroupName": "ihthanadeploy",
+          "virtualNetworkName": "ihthanavnet",
           "subnetName": "default",
           "privateIpAddresses": [
-            "10.1.2.21",
-            "10.1.2.22"
+            "10.4.1.21",
+            "10.4.2.21",
+            "10.4.3.21",
+            "10.4.4.21"
           ],
           "vmSize": "Standard_DS13_v2",
           "vmUsername": "adminuser",
-          "vmPassword": "9f2X7y29YuGq",
+          "vmPassword": "AweS0me@PWiht",
           "image": {
             "publisher": "Redhat",
             "offer": "RHEL",
@@ -26,7 +28,7 @@
           "dataDiskSizeGB": "512"
         },
         "stgAccountNamePrefix": "sapstg",
-        "puppetServerIpAddress": "10.1.2.5"
+        "puppetServerIpAddress": "10.4.0.5"
       }
     }
   }
